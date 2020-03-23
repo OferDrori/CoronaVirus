@@ -32,11 +32,6 @@ public class Register extends AppCompatActivity {
     private String pass = "1234";
     private int switchOption = 6;
     private boolean checkFlag = true;
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,32 +50,28 @@ public class Register extends AppCompatActivity {
     public void putInfoText()
     {
 
-        switch (switchOption%7) {
-            case 1:
+        switch (switchOption%6) {
+            case 0:
                 infoTextView.setText("Time count");
                 break;
-            case 2:
+            case 1:
                 infoTextView.setText(MESSAGE_PERTRAIT_MODE);
                 break;
-            case 3:
+            case 2:
                 infoTextView.setText(MESSAGE_INSTALLED_APP);
                 break;
-            case 4:
+            case 3:
                 infoTextView.setText(MESSAGE_NORMAL_SIZE);
                 break;
-            case 5:
+            case 4:
                 infoTextView.setText(MESSAGE_GPS);
                 break;
-            case 6:
+            case 5:
                 infoTextView.setText(MESSAGE_PUT_THIS_CODE);
                 randomStringTextView.setVisibility(View.VISIBLE);
                 randomString_editText.setVisibility(View.VISIBLE);
                 randomStringTextView.setText(RandomString.getAlphaNumericString(5));
-
-
-
-
-
+                break;
         }
 
 
@@ -156,38 +147,42 @@ public class Register extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             checkFlag=true;
-            switch (switchOption%7) {
-                case 1:
+            switch (switchOption%6) {
+                case 0:
                     if (checkIfUserAndPassAreCorrect())
                         successMassege();
+                    else
                       {
                         countDownUntilZero();
                         checkFlag = false;
                     }
                     break;
-                case 2:
+                case 1:
                     if(!(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT )) //check if the screen is in portrait mode - ORIENTATION_PORTRAIT.LANDSCAPE for landscape positon
                         printWrongMassege("not in portrait mode!");
 
                     break;
-                case 3:
+                case 2:
                     if (!(appInstalledOrNot("com.whatsapp"))) //check if what's is installed in android - can do it on other apps
                         printWrongMassege("the application is not installed!");
                     break;
-                case 4:
+                case 3:
                     if (!(checkScreenSize() == Configuration.SCREENLAYOUT_SIZE_NORMAL))
                         printWrongMassege("The screen size is not as excpected");
                     break;
-                case 5:
+                case 4:
                     if (!(checkIfGPSEnabled()))
-                        printWrongMassege("gps is disabled");
+                        printWrongMassege("GPS is disabled");
                     break;
-                case 6:
+                case 5:
                     if (!(randomStringTextView.getText().toString().equals(randomString_editText.getText().toString()))) {
-                        printWrongMassege("Incorect Input");
+                        printWrongMassege("Incorrect Input");
+                    }
+                    else {
                         randomStringTextView.setVisibility(View.INVISIBLE);
                         randomString_editText.setVisibility(View.INVISIBLE);
                     }
+
                     break;
             }
             if (checkFlag)
@@ -196,7 +191,6 @@ public class Register extends AppCompatActivity {
                 {
                     successMassege();
                     switchOption++;
-
                 }
                 else
                     printWrongMassege("user name or password is incorrect");
